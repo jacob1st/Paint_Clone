@@ -299,13 +299,13 @@ class Canvas:
                 self.grid[i][j].color = (grey, grey, grey)
 
     def save_picture_as(self):
-        if os.path.isdir('Saves') != True:
-            os.mkdir("Saves")
+        if os.path.isdir('../Saves') != True:
+            os.mkdir("../Saves")
         
         file_name = easygui.enterbox("NAME OF FILE ", "Save")
         # filename = 'first_save.txt'
         if file_name:
-            filename = "Saves/" + file_name
+            filename = "../Saves/" + file_name
             if filename[-4:] != ".txt":
                 filename += ".txt"
 
@@ -344,7 +344,7 @@ class Canvas:
     def load_picture(self):
         file_name = easygui.enterbox("NAME OF FILE ", "Load")
         if file_name:
-            filename = "Saves/" + file_name
+            filename = "../Saves/" + file_name
             if filename[-4:] != ".txt":
                 filename += ".txt"
 
