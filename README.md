@@ -9,4 +9,4 @@ Forgive my lack of drawing abilities
 
 ---
 ### Updated Version with saving and loading functionality
-![updated_version](https://github.com/jacob1st/Paint_Clone/blob/main/readme/paint_clone_new.PNG)
+![updated_version](https://github.com/jacob1st/Paint_Clone/blob/main/readme/paint_clone_save.PNG)
