@@ -7,4 +7,4 @@ A painting program clone in Python
 Forgive my lack of drawing abilities
 ![timelapse](./readme/timelapse.gif)
 
-![updated_version](PATH)
+![updated_version](https://github.com/jacob1st/Paint_Clone/blob/main/readme/paint_clone_new.PNG)
