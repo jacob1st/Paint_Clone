@@ -57,7 +57,7 @@ def draw_screen():
             pygame.draw.circle(display, canvas.active_color, (mouse_pos[0], mouse_pos[1]), canvas.brush_size * 5)
             pygame.draw.circle(display, (255, 255, 255), (mouse_pos[0], mouse_pos[1]), canvas.brush_size * 5, 1)
 
-        pilImage = Image.open(f"images/{canvas.active_tool}.png")
+        pilImage = Image.open(f"../images/{canvas.active_tool}.png")
         mouse_image = pygame.image.fromstring(pilImage.tobytes(), pilImage.size, pilImage.mode) 
         display.blit(mouse_image, (mouse_pos[0] - 25, mouse_pos[1] - 25))
     else:
