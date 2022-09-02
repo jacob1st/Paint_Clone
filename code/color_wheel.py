@@ -5,7 +5,7 @@ class ColorWheel:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        pilImage = Image.open("images/color_wheel.png")
+        pilImage = Image.open("../images/color_wheel.png")
         self.color_wheel = pygame.image.fromstring(pilImage.tobytes(), pilImage.size, pilImage.mode) 
         self.width = pilImage.size[0]
         self.height = pilImage.size[1]
