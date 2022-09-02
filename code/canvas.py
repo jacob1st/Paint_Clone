@@ -1,6 +1,8 @@
 import pixel
 import random
 import queue
+import os
+import easygui
 
 class Canvas:
     # Holds a 2d list of pixel objects
@@ -16,6 +18,8 @@ class Canvas:
         self.active_tool = "brush"
         self.current_pixel = []
         self.brush_size = 1
+        self.status = ""
+        self.current_file = ""
         self.create_grid()
     
     def create_grid(self):
@@ -96,6 +100,8 @@ class Canvas:
                 
                 self.color_with_size(pixel_to_color[0], pixel_to_color[1], color)
             self.current_pixel = [i, j]
+
+        self.status = ""
     
     def color_with_size(self, x, y, color):
         self.grid[x][y].color = color
@@ -291,3 +297,81 @@ class Canvas:
                 red, green, blue = self.grid[i][j].color[0], self.grid[i][j].color[1], self.grid[i][j].color[2]
                 grey = (red * 0.3 + green * 0.59 + blue * 0.11)
                 self.grid[i][j].color = (grey, grey, grey)
+
+    def save_picture_as(self):
+        if os.path.isdir('Saves') != True:
+            os.mkdir("Saves")
+        
+        file_name = easygui.enterbox("NAME OF FILE ", "Save")
+        # filename = 'first_save.txt'
+        if file_name:
+            filename = "Saves/" + file_name
+            if filename[-4:] != ".txt":
+                filename += ".txt"
+
+            self.current_file = filename
+            if os.path.isfile(filename):
+                overwrite = easygui.ynbox("This file already exists, overwrite?", "Overwrite")
+                if overwrite == False:
+                    self.status = "Did not save"
+                    return 1
+            f = open(filename, "w+")
+
+            for i in range(len(self.grid)):
+                for j in range(len(self.grid[i])):
+                    f.write(f"({self.grid[i][j].color[0]},{self.grid[i][j].color[1]},{self.grid[i][j].color[2]})")
+            
+            f.close()
+
+            self.status = "Saved"
+        else:
+            self.status = "Could not Save"
+    
+    def save_picture(self):
+        if self.current_file != "":
+            f = open(self.current_file, "w+")
+
+            for i in range(len(self.grid)):
+                for j in range(len(self.grid[i])):
+                    f.write(f"({self.grid[i][j].color[0]},{self.grid[i][j].color[1]},{self.grid[i][j].color[2]})")
+            
+            f.close()
+
+            self.status = "Saved"
+        else:
+            self.save_picture_as()
+
+    def load_picture(self):
+        file_name = easygui.enterbox("NAME OF FILE ", "Load")
+        if file_name:
+            filename = "Saves/" + file_name
+            if filename[-4:] != ".txt":
+                filename += ".txt"
+
+            self.current_file = filename
+
+            all_colors = []
+
+            try:
+                f = open(filename, "r")
+                for line in f:
+                    colors = line.split(')')
+                    for color in colors:
+                        color = color.split(',')
+                        if color == ['']:
+                            break
+                        all_colors.append((int(color[0][1:]), int(color[1]), int(color[2])))
+
+                index = 0
+                for i in range(len(self.grid)):
+                    for j in range(len(self.grid[i])):
+                        self.grid[i][j].color = all_colors[index]
+                        index += 1
+
+                f.close()
+                self.status = "Loaded"
+            except:
+                self.status = "File not found"
+        else:
+            self.status = "File Not Found"
+

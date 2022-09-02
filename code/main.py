@@ -38,6 +38,9 @@ def draw_screen():
     # RGB color
     write(f"Active Color: ({canvas.active_color[0]}, {canvas.active_color[1]}, {canvas.active_color[2]})", 670, 135)
 
+    # Saving/Loading
+    write(f"{canvas.status}", 400, 10, (255, 0, 0), size=26)
+
     check_tool()
     
     # Icon of active tool
@@ -107,11 +110,16 @@ buttons = [button.Button(670, 550, 100, 20, (58, 150, 247), "Brush", canvas.chan
             button.Button(200, 100, 100, 20, (255, 0, 0), "Sepia", canvas.sepia), 
             button.Button(330, 100, 100, 20, (255, 0, 0), "Grey scale", canvas.greyscale),
             button.Button(580, 120, 70, 20, (100, 100, 100), "Clear", canvas.clear_board),
-            button.Button(470, 120, 70, 20, (100, 100, 100), "Undo", canvas.undo_button)]
+            button.Button(470, 120, 70, 20, (100, 100, 100), "Undo", canvas.undo_button),
+            button.Button(10, 10, 70, 20, (100, 100, 100), "Save", canvas.save_picture),
+            button.Button(10, 50, 70, 20, (100, 100, 100), "Save As", canvas.save_picture_as),
+            button.Button(100, 10, 70, 20, (100, 100, 100), "Load", canvas.load_picture)
+            ]
 
 def main():
     mouse_pressed = False
     undo = False
+    saving = False
     slide_d = False
     slide_b = False
 
@@ -177,6 +185,12 @@ def main():
             canvas.undo()
         elif keys[pygame.K_z] != True:
             undo = False
+
+        if keys[pygame.K_LCTRL] and keys[pygame.K_s] and saving == False:
+            saving = True
+            canvas.save_picture()
+        elif keys[pygame.K_s] != True:
+            saving = False
 
         if slide_d:
             if pygame.mouse.get_pressed()[0] != True:
